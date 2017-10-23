@@ -1,54 +1,101 @@
-# Testing in Elixir
-
-There are libraries you can test your Elixir Code with.  The official library as we all know is [ExUnit Docs](https://hexdocs.pm/ex_unit/ExUnit.html).
-
-To Get a basic walk I suggest you look thru the docs.
-
-The TLDR version of this link -
-
-In an application generated with the `mix` command test files are placed in the `test` folder.
-
-These file need to end in a `*_test.exs` file extension this denotes that it's elixir script file.
-
-Like a lot of other libraries ExUnit has a DSL that's goal is to help you specify in plain english the goal of components of your code.
-
-##### With ExUnit you get these macros.
-
-* For General Setup and organizing your tests
-
-`describe`
-`setup`
-`setup_all`
-
-* These macros do the bulk of the grunt work
-
-`test`
-[assert](https://github.com/elixir-lang/elixir/blob/v1.5.2/lib/ex_unit/lib/ex_unit/assertions.ex#L101)
-
-[assert_receive](https://github.com/elixir-lang/elixir/blob/v1.5.2/lib/ex_unit/lib/ex_unit/assertions.ex#L352)
-`capture_io and capture_log`
-
-[Elixir School Testing ](https://elixirschool.com/en/lessons/basics/testing/)
-
-### Scripts
-
-This is how you run a script test
-`$> elixir hello_world_test.exs`
-
-`$> elixir -r **/*_test.exs`
-
-This can get boring pretty quickly.
+Testing Elixir
+----
 
 
-### Test Cases
+1. The name of this talk is Elixir Testing, I know that the name is very broad, Testing as a whole - I know that I won’t be able to scratch the surface on what ExUnit is capable of doing but for the most part I the goal of the talk is get you acquainted with the core capabilities.
 
-### Notes
+About Me
+===
 
-**Check out** 
+1. Who am I.  My name is Orion, I’ve been developing apps for about 8 years now.  5 1/2 years of that has been Ruby on Rails applications. The rest has been solely building elixir applications. ( Phoenix applications ) .
 
-[Coinbase Hex package](https://github.com/gregpardo/coinbase-elixir) 
-&
-[Poison Hex Package](https://github.com/devinus/poison)
+Like a lot of developers testing is not something I think right off the back when I approach building a new application or learning a new language.  But here are some reasons why I feel its important.
+
+	1. Avoiding regression.
+	2. Ease of Refactoring.
+	3. Building Confidence.
+	
+*Focusing on the point of  building confidence in your code.  
+
+While your trying to get to a rough draft on a project your working on if you have tests you will find your self feeling good about improving any code without breaking your mvp.  Iterating to something more elegant. I helps quell that fear of iterating because you know if you break a test, you can back out and re-examine your change.  Or if your like me you just simply say.. who cares how the code looks its tested.
+
+
+What is ExUnit
+===
+
+1. As stated in the docs - It is Elixir’s Unit Testing framework - but what about Acceptance , Integration tests ? We’ll get to that.
+
+ExUnit includes everything we need to thoroughly test our code.
+
+2. Unit Tests, are focused on a single portion of the system that can be verified on its own.
+
+
+So Lets look at basic setup:
+
+> Script Example:
+
+	Here you have a simple test
+
+		ExUnit.start - start the process
+
+		ExUnit.configuration - load in configuration 
+	
+	Here you have the implementation
+	
+	test “name of test”  do 
+		logic and assertions
+	end
+
+	scripts like this are called via `elixirc filename`
+
+Lets Look at Structure of ExUnit
+
+	• The main players.
+
+	• The macros
+
+	• The assertions
+
+	• Context
+
+	• Configuring ExUnit
+
+	• ExUnit.Test Struct
+	
+	• ExUnit.TestModule Struct
+
+Lets take another look at the basic example - 
+
+	* Lets look at the macro definition of test ( meta-data )
+
+	* Lets see how Context plays in all this.
+
+	* The Type of Tags - and context
+
+	* Lets look at the macro definition of describe
+
+	- The ExUnit.TestModule does - 
+
+	- The ExUnit.Test does - 
+
+	- assertions
+
+* But this not how majority of elixir apps are setup - they are all some form of 
+
+
+Mix Applications - but before we talk about mix apps and testing - lets Segway a bit and talk about Boundaries.
+
+How are they defined? * Interaction point - Ask for feedback.
+
+What we have access in Elixir by virtue Erlang is the ability to build a lot of functional cores that communicate with each other.  We encapsulate this functionality in processes.  How do we ensure these processes we create are behaving correctly.  How do we test them.
+
+
+Testing OTP examples
+
+
+Testing Phoenix - 
+
+
 
 
 
