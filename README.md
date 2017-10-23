@@ -24,7 +24,8 @@ Like a lot of other libraries ExUnit has a DSL that's goal is to help you specif
 
 `test`
 [assert](https://github.com/elixir-lang/elixir/blob/v1.5.2/lib/ex_unit/lib/ex_unit/assertions.ex#L101)
-`assert_receive`
+
+[assert_receive](https://github.com/elixir-lang/elixir/blob/v1.5.2/lib/ex_unit/lib/ex_unit/assertions.ex#L352)
 `capture_io and capture_log`
 
 [Elixir School Testing ](https://elixirschool.com/en/lessons/basics/testing/)
@@ -40,6 +41,14 @@ This can get boring pretty quickly.
 
 
 ### Test Cases
+
+### Notes
+
+**Check out** 
+
+[Coinbase Hex package](https://github.com/gregpardo/coinbase-elixir) 
+&
+[Poison Hex Package](https://github.com/devinus/poison)
 
 
 

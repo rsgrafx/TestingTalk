@@ -1,14 +1,16 @@
-if !System.get_env("EXERCISM_TEST_EXAMPLES") do
+if !System.get_env("RUNNING_ON_DIFFERENT_ENV") do
   Code.load_file("hello_world.exs", __DIR__)
-  Code.load_file("../it.exs", __DIR__)
+  Code.load_file("./it.exs", __DIR__)
 end
 
-ExUnit.start
+ExUnit.start()
 ExUnit.configure exclude: :pending, trace: true
 
 defmodule HelloWorldTest do
   use ExUnit.Case
   use Customize.It
+
+  @moduletag false
 
   setup do
     # Contexts are passed down
@@ -17,6 +19,13 @@ defmodule HelloWorldTest do
 
   test "says hello with no name" do
     assert HelloWorld.hello() == "Hello, World!"
+    IO.inspect(self(), label: "what is self --> \n")
+  end
+
+  test "assert does not do an exact comparison", context do
+    IO.inspect(context, label: "\n")
+    IO.puts "\n"
+    assert context[:foo] == true
   end
 
   it "says hello sample name" do
@@ -59,6 +68,11 @@ defmodule HelloWorldTest do
   @tag :pending # Module Tag
   test "says hello other sample name" do
     assert HelloWorld.hello("Bob") == "Hello, Bob!"
+  end
+
+  test "un used match", context do
+    IO.inspect("UNUSED LABEL: \n")
+    assert context = context
   end
 
 end

@@ -62,7 +62,7 @@ defmodule Customize.It do
 
     var      = Macro.escape(var)
     contents = Macro.escape(contents, unquote: true)
-
+    message = message <> "\n\n"
     quote bind_quoted: [var: var, contents: contents, message: message] do
       name = ExUnit.Case.register_test(__ENV__, :test, message, [])
       def unquote(name)(unquote(var)), do: unquote(contents)

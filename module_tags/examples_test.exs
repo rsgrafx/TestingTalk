@@ -1,5 +1,5 @@
 Code.load_file "module_tagged.ex", __DIR__
-Code.load_file "../it.exs", __DIR__
+Code.load_file "../hello-world-scripts/it.exs", __DIR__
 
 ExUnit.start
 ExUnit.configure exclude: :hated, trace: true
