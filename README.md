@@ -7,13 +7,13 @@ Testing Elixir
 About Me
 ===
 
-1. Who am I.  My name is Orion, I’ve been developing apps for about 8 years now.  5 1/2 years of that has been Ruby on Rails applications. The rest has been solely building elixir applications. ( Phoenix applications ) .
+1. My name is Orion, I’ve been developing apps for about 8 years now.  5 1/2 years of that has been Ruby on Rails applications. The rest has been solely building elixir applications. ( Phoenix applications ) .
 
 Like a lot of developers testing is not something I think right off the back when I approach building a new application or learning a new language.  But here are some reasons why I feel its important.
 
-	1. Avoiding regression.
+	1. Avoiding regression. - Breaking changes.
 	2. Ease of Refactoring.
-	3. Building Confidence.
+	3. Building Confidence in your code and as a developer.
 	
 *Focusing on the point of  building confidence in your code.  
 
@@ -34,35 +34,56 @@ So Lets look at basic setup:
 
 > Script Example:
 
-	Here you have a simple test
+Here you have [a basic Elixir test script Example](https://github.com/rsgrafx/TestingTalk/blob/master/hello-world-scripts/
 
-		ExUnit.start - start the process
+`ExUnit.start()` - starts the process
 
-		ExUnit.configuration - load in configuration 
+`ExUnit.configure()` - loads in configuration.
 	
-	Here you have the implementation
+#### The Basic DSL.
 	
-	test “name of test”  do 
-		logic and assertions
-	end
+	`
+	defmodule MyTestName do 
+		use ExUnit.Case
+		test “name of test”  do 
+			logic and assertions
+		end
+	end`
 
-	scripts like this are called via `elixirc filename`
+scripts like this are called via `elixirc filename`
 
-Lets Look at Structure of ExUnit
+General idea of What ExUnit does.
+====
 
-	• The main players.
+What happens when your test begin to run - When `ExUnit.start()` is triggered.
 
-	• The macros
+the will read in the file or files _test.exs and start create an individual
+struct - `ExUnit.TestModule` and populate the tests attribute on that module with an `ExUnit.Test` struct.
 
-	• The assertions
+[Starting Point](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit.ex#L133)
 
-	• Context
+### ExUnit.Test = Test Case 
 
-	• Configuring ExUnit
+A TestCases are sets of steps which are performed on a system to verify the expected output.
 
-	• ExUnit.Test Struct
-	
-	• ExUnit.TestModule Struct
+### ExUnit.TestModule = Test Scenario
+
+This consists of a detailed Test procedure.  Made up of TestCases.
+
+
+<!--Now getting into the full grit of whats heppening with those processes can be done in another talk.  I think the goal is to mainly give you a fair idea
+-->
+
+How are those `ExUnit.Test` structs created at runtime - for that we have to take a look at the `test` macro.
+
+### • Macros
+	[test](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266)
+
+### • Assertions
+
+### • Context
+
+### • Configuring ExUnit
 
 Lets take another look at the basic example - 
 
