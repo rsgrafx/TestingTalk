@@ -24,7 +24,6 @@ defmodule HelloWorldTest do
 
   test "assert does not do an exact comparison", context do
     IO.inspect(context, label: "\n")
-    IO.puts "\n"
     assert context[:foo] == true
   end
 
@@ -36,16 +35,16 @@ defmodule HelloWorldTest do
     refute HelloWorld.hello("Alice") == "Hello, JackAss!"
   end
 
-  it "should not cuss me out." do
+  it "should not curse me out." do
     refute HelloWorld.hello("Alice") == "Hello, JackAss!"
   end
 
-  describe "Grouped Tests \n" do
+  describe "Grouped Tests" do
 
     setup context do
       IO.inspect(
         context,
-        label: "This is the context result \n"
+        label: "This is the context result"
       )
       # Contexts are passed down
       refute Map.has_key? context, :child
@@ -53,14 +52,14 @@ defmodule HelloWorldTest do
       {:ok, child: %{foo: :bar}}
     end
 
-    test "\t display context \n", context do
+    test "display context", context do
 
       assert Map.has_key? context, :parent
       assert Map.has_key? context, :child
 
       IO.inspect(
         context,
-        label: "This is the context result \n"
+        label: "This is the context result"
       )
     end
   end
@@ -75,4 +74,6 @@ defmodule HelloWorldTest do
     assert context = context
   end
 
+  # tests are converted to functions.
+  IO.inspect Module.definitions_in(HelloWorldTest, :def)
 end

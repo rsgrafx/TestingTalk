@@ -5,9 +5,8 @@
 1. The name of this talk is Elixir Testing, I know that the name is very broad, Testing as a whole - I know that I won’t be able to scratch the surface on what ExUnit is capable of doing but for the most part I the goal of the talk is get you acquainted with the core capabilities.
 
 #### About Me
-===
 
-1. I’ve been developing apps for about 8 years now.  5 1/2 years of that has been Ruby on Rails applications. The rest has been solely building elixir applications. ( Phoenix applications ) .
+1. I’ve been developing apps for about 8 years now.  5 1/2 years of that has been Ruby on Rails applications. The rest has been solely building elixir applications. ( Phoenix applications ).
 
 Like a lot of developers testing is not something I think right off the back when I approach building a new application or learning a new language.  But here are some reasons why I feel its important.
 
@@ -53,8 +52,7 @@ Here you have a basic Elixir test script [example](https://github.com/rsgrafx/Te
 
 scripts like this are called via `elixirc filename`
 
-General idea of What ExUnit does.
-====
+### General idea of What ExUnit does.
 
 What happens when your test begin to run - When `ExUnit.start()` is triggered.
 
@@ -76,53 +74,58 @@ This consists of a detailed Test procedure.  Made up of TestCases.
 
 How are those `ExUnit.Test` structs created at runtime - for that we have to take a look at the `test` macro.
 
-### • Macros - ExUnit.Case
+### Macros - ExUnit.Case
 
 • [test](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266)
 
 • [describe](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L372)
 
-### • Context - ExUnit.Callbacks
+### Context - ExUnit.Callbacks
+
+* Lets see how Context plays in all this.
+
+[ExUnit CallBack Tests](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/test/ex_unit/callbacks_test.exs#L39)
+
+* The Type of Tags - and context
 
 These macros help ExUnit mimic conditions under which functionality is called to test for desired result.
 
+[How ExUnit registers a test to be run](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
 
-### • Assertions
+setup
 
-### • Configuring ExUnit
+setup_all
 
-Lets take another look at the basic example - 
+### Assertions
 
-	* Lets look at the macro definition of test ( meta-data )
+[assert](https://elixirschool.com/en/lessons/basics/testing/#assert)
 
-	* Lets see how Context plays in all this.
+[refute](https://elixirschool.com/en/lessons/basics/testing/#refute)
 
-	* The Type of Tags - and context
+* run test once again.
 
-	* Lets look at the macro definition of describe
+### Mix Applications
 
-	- The ExUnit.TestModule does - 
+* But this not how majority of elixir apps are setup - they are all some form of mix application.
 
-	- The ExUnit.Test does - 
-
-	- assertions
-
-* But this not how majority of elixir apps are setup - they are all some form of 
-
+`mix help test`
 
 Mix Applications - but before we talk about mix apps and testing - lets Segway a bit and talk about Boundaries.
 
-How are they defined? * Interaction point - Ask for feedback.
+How do we define Boundaries? * Interaction point - Ask for feedback.
 
-What we have access in Elixir by virtue Erlang is the ability to build a lot of functional cores that communicate with each other.  We encapsulate this functionality in processes.  How do we ensure these processes we create are behaving correctly.  How do we test them.
+What we have access in Elixir by virtue Erlang is the ability to build a lot of isolated functional cores that communicate with each other.  We encapsulate this functionality in processes.  How do we ensure these processes we create are behaving correctly.  How do we test them.
 
 
 Testing OTP examples
 
 
-Testing Phoenix - 
+
+
+Testing Phoenix
 
 
 
+You may be new to a language - but you may not be new to a domain. Knowing how to write tests should be one of the initial things you learn while gettin your mvp off the ground.
 
-
+One of the main goals of testing your code is gaining assurances.  Now me coming from the the ruby world where things can get mutated on the fly. Assurance was key to my sanity.   In Elixir I found that I did not have that problem not to say that you can’t get things wrong but its much easier to follow how your passing the data along to see where you the issue lies.
