@@ -48,13 +48,9 @@ defmodule MyTestName do
 end
 ```
 
-> ### Elixir Script Example:
-
-##### `$> elixir path_to/script_name.exs`
-
-Here you have a basic Elixir test script [example](https://github.com/rsgrafx/TestingTalk/blob/7b5c89fc1ac4cb078bdcf961d165d7a42a286bb5/hello-world-scripts/hello_world_test.exs#L20)
+> ### Elixir Script [example](https://github.com/rsgrafx/TestingTalk/blob/7b5c89fc1ac4cb078bdcf961d165d7a42a286bb5/hello-world-scripts/hello_world_test.exs#L20):
 	
-you can run this file via `$> elixirc filename_test.exs`
+you can run this file via `$> elixirc path/to/filename_test.exs`
 
 ### General idea of What ExUnit does.
 
