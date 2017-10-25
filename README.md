@@ -1,46 +1,51 @@
 # Testing Elixir
 
 
-The name of this talk is Elixir Testing, I know that the name is very broad, Testing as a whole - I know that I won’t be able to scratch the surface on what ExUnit is capable of doing but for the most part I the goal of the talk is get you acquainted with the library's core capabilities.
+The name of this talk is Elixir Testing, I know that the title sounds grand, Testing as a whole is extremely broad - I know that I won’t be able to scratch the surface on what ExUnit is capable of doing but for the most part the goal of the talk is get you generally acquainted with the library's capabilities.
 
 ### About Me
 
-Like a lot of developers testing was not something I think right off the back when I approach building a new application or learning a new language.  But after much painful learning here are some reasons why I feel its important.
+Like a lot of developers testing was not something I think to do right off the bat when I approach building a new application or learning a new language.  But after much painful learning here are some reasons why I feel its important think of testing upfront
 
-* Avoiding regression. - Breaking changes.
-2. Ease of Refactoring.
-3. Building Confidence in your code and as a developer.	
+> #### 1. Avoiding regression.
+	* Breaking changes you need something to keep you in check.
 
+> #### 2. Ease of Refactoring.
+	* If you do decide to change some already working code to something elegant.  Your tests are your guide to success.
+
+> #### 3. Building Confidence in your code and as a developer.	
 > On the point of building confidence in your code.
-
-While your trying to get to a rough draft on a project your working on if you have tests you will find your self feeling good about improving any code without breaking your mvp.  Iterating to something more elegant. I helps quell that fear of iterating because you know if you break a test, you can back out and re-examine your change.  Or if your like me you just simply say.. who cares how the code looks its tested.
+	* While your trying to get to a rough draft on a project your working on if you have tests you will find your self feeling good about improving any code without breaking your mvp.  Iterating to something more elegant. I helps quell that fear of iterating because you know if you break a test, you can back out and re-examine your change.  Or if your like me you just simply say.. who cares how the code looks its tested.
 
 
 ## What is ExUnit
 
-1. As stated in the docs - It is Elixir’s Unit Testing framework - but what about Acceptance , Integration tests ? We’ll get to that.
+1. As stated in the docs - It is Elixir’s <b>Unit</b> Testing framework - but what about Acceptance , Integration tests ? We’ll get to that.
 
 ExUnit includes everything we need to thoroughly test our code.
 
-2. Unit Tests, are focused on a single portion of the system that can be verified on its own.
+### Let's Dive in.
 
-These are the mininum requirements to get ExUnit to run.
+> #### Test Scripts
+
+These are the mininum requirements to get ExUnit up and running.  
 
 > In your script you need:
+You create a file it must have _test.exs 
 
 `ExUnit.start()` - starts the process
 
-`ExUnit.configure()` - loads in configuration.
+`ExUnit.configure()` - Loads in configuration - but does not have the niceties of mix app.
 
-	
-	defmodule MyTestName do 
-		use ExUnit.Case
-		test “name of test”  do 
-			logic and assertions
-		end
+Define your Test Scenario 
+```	
+defmodule MyTestName do 
+	use ExUnit.Case
+	test “name of test”  do 
+		logic and assertions
 	end
-
-
+end
+```
 
 > ### Elixir Script Example:
 
@@ -48,7 +53,7 @@ These are the mininum requirements to get ExUnit to run.
 
 Here you have a basic Elixir test script [example](https://github.com/rsgrafx/TestingTalk/blob/7b5c89fc1ac4cb078bdcf961d165d7a42a286bb5/hello-world-scripts/hello_world_test.exs#L20)
 	
-scripts like this are called via `elixirc filename`
+you can run this file via `$> elixirc filename_test.exs`
 
 ### General idea of What ExUnit does.
 
@@ -86,6 +91,17 @@ Made up of several macros that help you structure your test suite, test cases in
 
 * [test macro](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266) |  [registers a test internally](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
 
+The gist of what's happening is the test macro defines a function on the module the macro was used.
+
+The registering of that test - this function does a couple things but mainly
+checks a function by that name was already implemented and builds the environment in which that function should run.
+
+```
+  # Place this before the last end in your TestModule 
+  # tests are converted to functions.
+  
+  IO.inspect Module.definitions_in(HelloWorldTest, :def)
+```
 * [describe](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L372)
 
 ### Context & ExUnit.Callbacks
@@ -167,6 +183,24 @@ mix test --include runnable:true
 
 `mix test --only describe:"PMap"`
 
+```
+# mix.exs
+
+  ...
+  
+  defp deps do
+    [{:test_package, only: [:dev, :test]}]
+  end
+
+  defp aliases do
+    [
+      test: ["ecto.drop", "ecto.create", "ecto.migrate", "test"],
+      foobar: ["run -e 'IO.puts(\"One\")'", "run -e 'Mix.Task.reenable(:run)'"]
+    ]
+  end
+
+```
+
 
 In summary Mix is a elixir's build has a lot of niceties that help you manage your tests.  I encourage you to read up more - just look at the docs.
 
@@ -180,18 +214,23 @@ Here is an example of testing a Module that uses GenServer behaviour.
 
 What we have access in Elixir by virtue Erlang is the ability to build a lot of isolated functional cores that communicate with each other.  We encapsulate this functionality in processes.  How do we ensure these processes we create are behaving correctly.  How do we test them.
 
-Setup: 
-	[Mix Test Watch](https://github.com/rsgrafx/TestingTalk/blob/a9ecc63fc123fdc363f2a39f49fbe11e3a92e789/genserver_testing/mix.exs#L22)
+[GenServer Test](https://github.com/rsgrafx/TestingTalk/blob/master/genserver_testing/test/lib/password_lock_test.exs)
 
-`mix deps.get`	
-
-`mix test.watch`
+[Module with GenServer Behaviour](https://github.com/rsgrafx/TestingTalk/blob/master/genserver_testing/lib/genserver_testing.ex)
 
 ## Testing in Phoenix
 
 #### Guess what - Phoenix is a just another mix application.
+	
+> #### ExUnit.CaseTemplate
 
-Phoenix makes it easy to write tests for your controllers.  Integeration in phoenix that run in a headless browser. 
+This module allows a developer to define a test case template to be used throughout their tests. This is useful when there are a set of functions that should be shared between tests or a set of setup callbacks.
+
+Because of the nature of Phoenix and the different moving parts - Contexts, Controllers, and Views. Phoenix makes use of this module to section off test groups with shared functionality.
+
+For Example using fixtures. Tests for your Phoenix Controllers dont need to include those functions.  The test modules you define that test your Phoenix Contexts probably do.
+
+Phoenix already makes it easy to write tests for your controllers.  Integeration in phoenix that run in a headless browser. 
 
  You can put this in your mix.exs 
 ` {:hound, "~> 1.0", only: [:dev, :test]}`
@@ -203,27 +242,61 @@ Phoenix makes it easy to write tests for your controllers.  Integeration in phoe
 
 ##### Built-in Test helpers
 
+> Readup on Phoenix.ChannelTest
+
 > Readup on Phoenix.ConnTest
 
-> Readup on ChannelTest
-	
-##### ExUnit.CaseTemplate
-
-This module allows a developer to define a test case template to be used throughout their tests. This is useful when there are a set of functions that should be shared between tests or a set of setup callbacks.
-
 ##### Ecto
+[Elixir LDN - Ecto Shared Process explanation](https://youtu.be/jhZwQ1LTdUI?t=15m1s)
 
 Issues with Ecto - are solely when you dont set things up correctly.
 
 [Blog Post](https://medium.com/@qertoip/making-sense-of-ecto-2-sql-sandbox-and-connection-ownership-modes-b45c5337c6b7)
 
-##### Testing Third Party API's - Bypass
+```
+setup do
+   :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
+    Ecto.Adapters.SQL.Sandbox.mode(Repo, {:shared, self()})
+end
 
+```
 
-#### You may be new to a language - but you may not be new to a domain. Knowing how to write tests should be one of the initial things you learn while gettin your mvp off the ground.
+### Testing Third Party API's 
+
+Honorable Mentions
+
+[Bypass](https://github.com/pspdfkit-labs/bypass)
+
+[ExVCR](https://github.com/parroty/exvcr)
+
+### Failed to Mention
+
+* DocTests
+
+* Static Types and Testing
+
+> #### Conclusion
+
+You may be new to a language - but you may not be new to a domain. Knowing how to write tests should be one of the initial things you learn while gettin your mvp off the ground.
 
 One of the main goals of testing your code is gaining assurances.  Now me coming from the the ruby world where things can get mutated on the fly. Assurance was key to my sanity.   In Elixir I found that I did not have that problem not to say that you can’t get things wrong but its much easier to follow how your passing the data along to see where you the issue lies.
 
 [Testing Mix Tasks](https://jc00ke.com/2017/04/05/testing-elixir-mix-tasks/)
 
+### TDD and Red Green Refactor
+
+Hex Package: Mix Test Watch
+
+Setup:
+	[Mix Test Watch](https://github.com/rsgrafx/TestingTalk/blob/a9ecc63fc123fdc363f2a39f49fbe11e3a92e789/genserver_testing/mix.exs#L22)
+	
+`mix test.watch`
+
+### Bibliography - 
+
+[semaphoreci exunit intro](https://semaphoreci.com/community/tutorials/introduction-to-testing-elixir-applications-with-exunit)
+
+[semaphoreci testing streams](https://semaphoreci.com/community/tutorials/test-driving-a-stream-powered-elixir-library)
+
 ### To Be Cont'd
+
