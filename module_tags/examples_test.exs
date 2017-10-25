@@ -8,14 +8,16 @@ defmodule ModuleTaggedTest do
   use ExUnit.Case
   use Customize.It
 
+  @moduletag name: :orion
+
   it "should not be ignored", context do
-    assert context
+    assert context[:name] == :orion
   end
 
-  @moduletag :hated
   it "should ignored"
 
   it "should not be ignored but is...", context do
+    assert context[:name] == :orion
     assert 1+2 == 2
   end
 

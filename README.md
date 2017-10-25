@@ -1,27 +1,22 @@
-## Testing Elixir
+# Testing Elixir
 
 
+The name of this talk is Elixir Testing, I know that the name is very broad, Testing as a whole - I know that I won’t be able to scratch the surface on what ExUnit is capable of doing but for the most part I the goal of the talk is get you acquainted with the library's core capabilities.
 
-1. The name of this talk is Elixir Testing, I know that the name is very broad, Testing as a whole - I know that I won’t be able to scratch the surface on what ExUnit is capable of doing but for the most part I the goal of the talk is get you acquainted with the core capabilities.
+### About Me
 
-#### About Me
-
-1. I’ve been developing apps for about 8 years now.  5 1/2 years of that has been Ruby on Rails applications. The rest has been solely building elixir applications. ( Phoenix applications ).
-
-Like a lot of developers testing is not something I think right off the back when I approach building a new application or learning a new language.  But here are some reasons why I feel its important.
+Like a lot of developers testing was not something I think right off the back when I approach building a new application or learning a new language.  But after much painful learning here are some reasons why I feel its important.
 
 * Avoiding regression. - Breaking changes.
 2. Ease of Refactoring.
 3. Building Confidence in your code and as a developer.	
 
-
-> Focusing on the point of  building confidence in your code.  
+> On the point of building confidence in your code.
 
 While your trying to get to a rough draft on a project your working on if you have tests you will find your self feeling good about improving any code without breaking your mvp.  Iterating to something more elegant. I helps quell that fear of iterating because you know if you break a test, you can back out and re-examine your change.  Or if your like me you just simply say.. who cares how the code looks its tested.
 
 
-What is ExUnit
-===
+## What is ExUnit
 
 1. As stated in the docs - It is Elixir’s Unit Testing framework - but what about Acceptance , Integration tests ? We’ll get to that.
 
@@ -29,19 +24,14 @@ ExUnit includes everything we need to thoroughly test our code.
 
 2. Unit Tests, are focused on a single portion of the system that can be verified on its own.
 
+These are the mininum requirements to get ExUnit to run.
 
-So Lets look at basic setup:
-
-> Script Example:
-
-Here you have a basic Elixir test script [example](https://github.com/rsgrafx/TestingTalk/blob/7b5c89fc1ac4cb078bdcf961d165d7a42a286bb5/hello-world-scripts/hello_world_test.exs#L20)
+> In your script you need:
 
 `ExUnit.start()` - starts the process
 
 `ExUnit.configure()` - loads in configuration.
-	
-#### The Basic DSL.
-	
+
 	
 	defmodule MyTestName do 
 		use ExUnit.Case
@@ -50,82 +40,190 @@ Here you have a basic Elixir test script [example](https://github.com/rsgrafx/Te
 		end
 	end
 
+
+
+> ### Elixir Script Example:
+
+##### `$> elixir path_to/script_name.exs`
+
+Here you have a basic Elixir test script [example](https://github.com/rsgrafx/TestingTalk/blob/7b5c89fc1ac4cb078bdcf961d165d7a42a286bb5/hello-world-scripts/hello_world_test.exs#L20)
+	
 scripts like this are called via `elixirc filename`
 
 ### General idea of What ExUnit does.
 
 What happens when your test begin to run - When `ExUnit.start()` is triggered.
 
-the will read in the file or files _test.exs and start create an individual
-struct - `ExUnit.TestModule` and populate the tests attribute on that module with an `ExUnit.Test` struct.
-
 [Starting Point](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit.ex#L133)
 
-### ExUnit.Test = Test Case 
+* The main ExUnit Process is started 
 
-A TestCases are sets of steps which are performed on a system to verify the expected output.
+* The process will read in the file or files _test.exs and start create an individual struct - `ExUnit.TestModule` for each testmodule you have defined and populate the tests attribute on that module with an `ExUnit.Test` struct.
+
+* Each `ExUnit.Test` struct will contain data that will allow ExUnit to convert that data into an executable function. What this function returns - specifies whether a test is a passing test or failing test.
 
 ### ExUnit.TestModule = Test Scenario
 
 This consists of a detailed Test procedure.  Made up of TestCases.
 
-<!--Now getting into the full grit of whats heppening with those processes can be done in another talk.  I think the goal is to mainly give you a fair idea
+### ExUnit.Test = Test Case 
+
+A TestCases are sets of steps which are performed on a system to verify the expected output.
+
+<!--
+Now getting into the full grit of whats heppening with those processes fuel for another talk.  I think the goal is to mainly give you a fair idea what is going on.
 -->
 
 How are those `ExUnit.Test` structs created at runtime - for that we have to take a look at the `test` macro.
 
+# The DSL
+
+<!-- 
+Made up of several macros that help you structure your test suite, test cases in way that closely mirrors how you can read in a spec doc. 
+-->
+
 ### Macros - ExUnit.Case
 
-• [test](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266)
+* [test macro](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266) |  [registers a test internally](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
 
-• [describe](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L372)
+* [describe](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L372)
 
-### Context - ExUnit.Callbacks
+### Context & ExUnit.Callbacks
 
-* Lets see how Context plays in all this.
+> #### The world surrounding your Test.
 
-[ExUnit CallBack Tests](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/test/ex_unit/callbacks_test.exs#L39)
+Context is a decription of the data being passed around that helps each test run in specific scope.  We can use tags or callbacks to help get specific data required to test how our functionality works in different environments.
 
-* The Type of Tags - and context
+`@tag` are placed just above the defining the `test` directive.
+They are used to pass data from the test to the callback.
+
+`@moduletag` placed at the top of the file within your TestModule.  They are used to define some arbitrary data that you would want already set for all tests or a `describe` block.
+
+In order to understand callbacks it might be good to understand what's happening.  Here is a run down of the life-cycle of the test process:
+
+* the test process is spawned
+* it runs setup/2 callbacks
+* it runs the test itself
+* it stops all supervised processes
+* the test process exits with reason :shutdown
+* on_exit/2 callbacks are executed in a separate process
 
 These macros help ExUnit mimic conditions under which functionality is called to test for desired result.
 
-[How ExUnit registers a test to be run](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
+> #### [ExUnit Context Tests](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/test/ex_unit/callbacks_test.exs#L39)
 
-setup
 
-setup_all
+> #### [How ExUnit registers a test internally](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
+
+`setup` - is run in the same process as the test itself.
+
+`setup_all` - is run in a seperate process per module.
+
+[Example using Tag and Setup](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/module_tags/example_code_loading_test.exs#L5)
 
 ### Assertions
+
+[Great examples and Introduction](https://elixirschool.com/en/lessons/basics/testing/)
 
 [assert](https://elixirschool.com/en/lessons/basics/testing/#assert)
 
 [refute](https://elixirschool.com/en/lessons/basics/testing/#refute)
 
-* run test once again.
+* run test once again. 
 
-### Mix Applications
+> This not how majority of elixir apps are setup - they are all some form of mix application.
 
-* But this not how majority of elixir apps are setup - they are all some form of mix application.
+## Mix Applications
+
+When you create an new app - A `test` folder already setup with a `test_helper.exs` file in it.  You can put some logic in this file but mostly it's there for mission critical directives such as 
+
+`ExUnit.start()` or `Application.ensure_all_started(:your_fav_testing_helper_app)`
+
+`mix` is Elixir's go to build tool for app management.  It comes pre built with testing functionality to see that.  Its not tied specifically to ExUnit.  If there is any other testing framework you can simply drop it in and write your tests in it.
+
+`$> mix help test`
+
+### What's possible via `mix test` interface quick list
 
 `mix help test`
 
-Mix Applications - but before we talk about mix apps and testing - lets Segway a bit and talk about Boundaries.
+[Quick write up with mix testing tips](https://medium.com/blackode/elixir-testing-running-only-specific-tests-746cfc24d904)
 
-How do we define Boundaries? * Interaction point - Ask for feedback.
+`mix test`
+
+`mix test path_to_your_file.exs:10`
+
+`mix test path_to_your_file.exs`
+
+
+```
+@tag runnable: true
+test ....
+
+mix test --include runnable:true
+```
+
+`mix test --only describe:"Block A"`
+
+`mix test --only describe:"PMap"`
+
+
+In summary Mix is a elixir's build has a lot of niceties that help you manage your tests.  I encourage you to read up more - just look at the docs.
+
+## Lets Segway a bit and talk about Boundaries.
+
+How do we define Boundaries? - feedback.
+
+## Testing and GenServers
+
+Here is an example of testing a Module that uses GenServer behaviour.
 
 What we have access in Elixir by virtue Erlang is the ability to build a lot of isolated functional cores that communicate with each other.  We encapsulate this functionality in processes.  How do we ensure these processes we create are behaving correctly.  How do we test them.
 
+Setup: 
+	[Mix Test Watch](https://github.com/rsgrafx/TestingTalk/blob/a9ecc63fc123fdc363f2a39f49fbe11e3a92e789/genserver_testing/mix.exs#L22)
 
-Testing OTP examples
+`mix deps.get`	
+
+`mix test.watch`
+
+## Testing in Phoenix
+
+#### Guess what - Phoenix is a just another mix application.
+
+Phoenix makes it easy to write tests for your controllers.  Integeration in phoenix that run in a headless browser. 
+
+ You can put this in your mix.exs 
+` {:hound, "~> 1.0", only: [:dev, :test]}`
+ 
+ Ensure that the application starts when by putting 
+ `Application.ensure_all_started(:hound)` in  test_helper.exs
+
+[Excellent Hound Tutorial](https://semaphoreci.com/community/tutorials/end-to-end-testing-in-elixir-with-hound) 
+
+##### Built-in Test helpers
+
+> Readup on Phoenix.ConnTest
+
+> Readup on ChannelTest
+	
+##### ExUnit.CaseTemplate
+
+This module allows a developer to define a test case template to be used throughout their tests. This is useful when there are a set of functions that should be shared between tests or a set of setup callbacks.
+
+##### Ecto
+
+Issues with Ecto - are solely when you dont set things up correctly.
+
+[Blog Post](https://medium.com/@qertoip/making-sense-of-ecto-2-sql-sandbox-and-connection-ownership-modes-b45c5337c6b7)
+
+##### Testing Third Party API's - Bypass
 
 
-
-
-Testing Phoenix
-
-
-
-You may be new to a language - but you may not be new to a domain. Knowing how to write tests should be one of the initial things you learn while gettin your mvp off the ground.
+#### You may be new to a language - but you may not be new to a domain. Knowing how to write tests should be one of the initial things you learn while gettin your mvp off the ground.
 
 One of the main goals of testing your code is gaining assurances.  Now me coming from the the ruby world where things can get mutated on the fly. Assurance was key to my sanity.   In Elixir I found that I did not have that problem not to say that you can’t get things wrong but its much easier to follow how your passing the data along to see where you the issue lies.
+
+[Testing Mix Tasks](https://jc00ke.com/2017/04/05/testing-elixir-mix-tasks/)
+
+### To Be Cont'd

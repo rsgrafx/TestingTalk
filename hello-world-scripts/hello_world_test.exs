@@ -10,7 +10,7 @@ defmodule HelloWorldTest do
   use ExUnit.Case
   use Customize.It
 
-  @moduletag false
+  @moduletag foo: :bar
 
   setup do
     # Contexts are passed down
@@ -24,7 +24,7 @@ defmodule HelloWorldTest do
 
   test "assert does not do an exact comparison", context do
     IO.inspect(context, label: "\n")
-    assert context[:foo] == true
+    assert context[:foo] == :bar
   end
 
   it "says hello sample name" do
