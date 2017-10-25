@@ -226,6 +226,8 @@ This module allows a developer to define a test case template to be used through
 
 Because of the nature of Phoenix and the different moving parts - Contexts, Controllers, and Views. Phoenix makes use of this module to section off test groups with shared functionality.
 
+[ConnCase Example](https://github.com/rsgrafx/TestingTalk/blob/master/redirecting_app/test/support/conn_case.ex)
+
 For Example using fixtures. Tests for your Phoenix Controllers dont need to include those functions.  The test modules you define that test your Phoenix Contexts probably do.
 
 [Fixture Ecto writeup](http://blog.danielberkompas.com/elixir/2015/07/16/fixtures-for-ecto.html)
