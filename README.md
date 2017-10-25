@@ -89,7 +89,7 @@ Made up of several macros that help you structure your test suite, test cases in
 
 ### Macros - ExUnit.Case
 
-* [test macro](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266) |  [registers a test internally](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
+* [test macro definition](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266) |  [register_test a function called internally](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
 
 The gist of what's happening is the test macro defines a function on the module the macro was used.
 
@@ -157,8 +157,6 @@ When you create an new app - A `test` folder already setup with a `test_helper.e
 
 `mix` is Elixir's go to build tool for app management.  It comes pre built with testing functionality to see that.  Its not tied specifically to ExUnit.  If there is any other testing framework you can simply drop it in and write your tests in it.
 
-`$> mix help test`
-
 ### What's possible via `mix test` interface quick list
 
 `mix help test`
@@ -220,7 +218,7 @@ What we have access in Elixir by virtue Erlang is the ability to build a lot of 
 
 ## Testing in Phoenix
 
-#### Guess what - Phoenix is a just another mix application.
+#### Guess what - Phoenix is a just another mix application.  Phoenix includes modules that make heavy use of `ExUnit.CaseTemplate` to group functionality for testing things built from different parts of the framework.
 	
 > #### ExUnit.CaseTemplate
 
@@ -229,6 +227,8 @@ This module allows a developer to define a test case template to be used through
 Because of the nature of Phoenix and the different moving parts - Contexts, Controllers, and Views. Phoenix makes use of this module to section off test groups with shared functionality.
 
 For Example using fixtures. Tests for your Phoenix Controllers dont need to include those functions.  The test modules you define that test your Phoenix Contexts probably do.
+
+[Fixture Ecto writeup](http://blog.danielberkompas.com/elixir/2015/07/16/fixtures-for-ecto.html)
 
 Phoenix already makes it easy to write tests for your controllers.  Integeration in phoenix that run in a headless browser. 
 
