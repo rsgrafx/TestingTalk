@@ -38,6 +38,7 @@ You create a file it must have _test.exs
 `ExUnit.configure()` - Loads in configuration - but does not have the niceties of mix app.
 
 Define your Test Scenario 
+
 ```	
 defmodule MyTestName do 
 	use ExUnit.Case
@@ -218,8 +219,9 @@ What we have access in Elixir by virtue Erlang is the ability to build a lot of 
 
 ## Testing in Phoenix
 
-#### Guess what - Phoenix is a just another mix application.  Phoenix includes modules that make heavy use of `ExUnit.CaseTemplate` to group functionality for testing things built from different parts of the framework.
-	
+> #### Guess what - Phoenix is a just another mix application.  Phoenix includes modules that make use of `ExUnit.CaseTemplate` to group functionality for testing things built from different parts of the framework.
+---
+
 > #### ExUnit.CaseTemplate
 
 This module allows a developer to define a test case template to be used throughout their tests. This is useful when there are a set of functions that should be shared between tests or a set of setup callbacks.
@@ -228,11 +230,13 @@ Because of the nature of Phoenix and the different moving parts - Contexts, Cont
 
 [ConnCase Example](https://github.com/rsgrafx/TestingTalk/blob/master/redirecting_app/test/support/conn_case.ex)
 
-For Example using fixtures. Tests for your Phoenix Controllers dont need to include those functions.  The test modules you define that test your Phoenix Contexts probably do.
+For Example if your using fixtures. Your tests for your Phoenix Controllers dont need to include those functions.  The test modules you define that test your Phoenix Contexts probably do.
 
 [Fixture Ecto writeup](http://blog.danielberkompas.com/elixir/2015/07/16/fixtures-for-ecto.html)
 
-Phoenix already makes it easy to write tests for your controllers.  Integeration in phoenix that run in a headless browser. 
+[Context Case](https://github.com/rsgrafx/TestingTalk/blob/master/one-offs/example_context_case.ex)
+
+Phoenix already makes it easy to write tests for your controllers.  Hound makes writing Integration tests easy by runnning phoenix that run in a headless browser. 
 
  You can put this in your mix.exs 
 ` {:hound, "~> 1.0", only: [:dev, :test]}`
@@ -253,7 +257,7 @@ Phoenix already makes it easy to write tests for your controllers.  Integeration
 
 Issues with Ecto - are solely when you dont set things up correctly.
 
-[Blog Post](https://medium.com/@qertoip/making-sense-of-ecto-2-sql-sandbox-and-connection-ownership-modes-b45c5337c6b7)
+[Making Sense of Ecto 2 SQL.Sandbox and Connection Ownership Modes](https://medium.com/@qertoip/making-sense-of-ecto-2-sql-sandbox-and-connection-ownership-modes-b45c5337c6b7)
 
 ```
 setup do
@@ -267,21 +271,20 @@ end
 
 Honorable Mentions
 
-[Bypass](https://github.com/pspdfkit-labs/bypass)
+##### Bypass Hex Package
+
+> [Bypass](https://github.com/pspdfkit-labs/bypass) provides a quick way to create a custom plug that can be put in place instead of an actual HTTP server to return prebaked responses to client requests. This is most useful in tests, when you want to create a mock HTTP server and test how your HTTP client handles different types of responses from the server.
+
+[Example Bypass Tests](https://github.com/rsgrafx/TestingTalk/blob/master/bypass_app/test/integration/client_test.exs)
 
 [ExVCR](https://github.com/parroty/exvcr)
 
 ### Failed to Mention
 
-* DocTests
+* Doc Tests - pretty straight forward. 
 
-* Static Types and Testing
+* Static Types with regards to Testing.
 
-> #### Conclusion
-
-You may be new to a language - but you may not be new to a domain. Knowing how to write tests should be one of the initial things you learn while gettin your mvp off the ground.
-
-One of the main goals of testing your code is gaining assurances.  Now me coming from the the ruby world where things can get mutated on the fly. Assurance was key to my sanity.   In Elixir I found that I did not have that problem not to say that you can’t get things wrong but its much easier to follow how your passing the data along to see where you the issue lies.
 
 [Testing Mix Tasks](https://jc00ke.com/2017/04/05/testing-elixir-mix-tasks/)
 
@@ -294,11 +297,17 @@ Setup:
 	
 `mix test.watch`
 
-### Bibliography - 
+### Additional Reads
 
-[semaphoreci exunit intro](https://semaphoreci.com/community/tutorials/introduction-to-testing-elixir-applications-with-exunit)
+[semaphoreci ExUnit intro](https://semaphoreci.com/community/tutorials/introduction-to-testing-elixir-applications-with-exunit)
 
 [semaphoreci testing streams](https://semaphoreci.com/community/tutorials/test-driving-a-stream-powered-elixir-library)
 
-### To Be Cont'd
 
+> #### Conclusion
+
+You may be new to a language - but you may not be new to a domain. Knowing how to write tests should be one of the initial things you learn while gettin your mvp off the ground.
+
+One of the main goals of testing your code is gaining assurances.  Now me coming from the the ruby world where things can get mutated on the fly. Assurance was key to my sanity.   In Elixir I found that I did not have that problem not to say that you can’t get things wrong but its much easier to follow how your passing the data along to see where you the issue lies.
+
+### To Be Cont'd
