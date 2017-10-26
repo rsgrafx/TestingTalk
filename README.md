@@ -107,6 +107,8 @@ checks that a function by that name was not already implemented and builds the e
 ```
 * [describe](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L372)
 
+Every describe block receives a name which is used as prefix for upcoming tests. Inside a block, ExUnit.Callbacks.setup/1 may be invoked and it will define a setup callback to run only for the current block. The describe name is also added as a tag, allowing developers to run tests for specific blocks.
+
 ### Context & ExUnit.Callbacks
 
 > #### The world surrounding your Test.
@@ -165,7 +167,6 @@ When you create an new app - A `test` folder already setup with a `test_helper.e
 In a new mix app. Everything is already preconfigured.
 
 `mix test`
-
 
 ### What's possible via `mix test` interface quick list
 
