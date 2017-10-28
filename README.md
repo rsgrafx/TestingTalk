@@ -137,12 +137,7 @@ In order to understand callbacks it might be good to understand what's happening
 
 These macros help ExUnit mimic conditions under which functionality is called to test for desired result.
 
-> #### [ExUnit Context Tests](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/test/ex_unit/callbacks_test.exs#L39)
-
-
-> #### [How ExUnit registers a test internally](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
-
-[Example using Tag and Setup](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/module_tags/example_code_loading_test.exs#L5)
+> #### [ExUnit Context Tests](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/test/ex_unit/callbacks_test.exs#L39) * Note that ExUnit itself is tested with ExUnit.
 
 ### Assertions
 
@@ -245,9 +240,9 @@ Because of the nature of Phoenix and the different moving parts - Contexts, Cont
 
 For Example if your using fixtures. Your tests for your Phoenix Controllers dont need to include those functions.  The test modules you define that test your Phoenix Contexts probably do.
 
-[Fixture Ecto writeup](http://blog.danielberkompas.com/elixir/2015/07/16/fixtures-for-ecto.html)
+[Great Fixture Ecto writeup](http://blog.danielberkompas.com/elixir/2015/07/16/fixtures-for-ecto.html)
 
-[Context Case](https://github.com/rsgrafx/TestingTalk/blob/master/one-offs/example_context_case.ex)
+[Example of a Context Case](https://github.com/rsgrafx/TestingTalk/blob/master/one-offs/example_context_case.ex)
 
 Phoenix already makes it easy to write tests for your controllers.  Hound makes writing Integration tests easy by runnning phoenix that run in a headless browser. 
 
@@ -266,11 +261,9 @@ Phoenix already makes it easy to write tests for your controllers.  Hound makes 
 > Readup on Phoenix.ConnTest
 
 ##### Ecto
-[Elixir LDN - Ecto Shared Process explanation](https://youtu.be/jhZwQ1LTdUI?t=15m1s)
+[Elixir LDN - Ecto Shared Process explanation](https://youtu.be/jhZwQ1LTdUI?t=15m1s) Tagged Youtube Video at mark where speaker begins explaining shared processes. Issues with Ecto - are solely when you dont set things up correctly.
 
-Issues with Ecto - are solely when you dont set things up correctly.
-
-[Making Sense of Ecto 2 SQL.Sandbox and Connection Ownership Modes](https://medium.com/@qertoip/making-sense-of-ecto-2-sql-sandbox-and-connection-ownership-modes-b45c5337c6b7)
+An additional explanation on the same topic of Shared processes. [Making Sense of Ecto 2 SQL.Sandbox and Connection Ownership Modes](https://medium.com/@qertoip/making-sense-of-ecto-2-sql-sandbox-and-connection-ownership-modes-b45c5337c6b7)
 
 ```
 setup do
@@ -282,7 +275,7 @@ end
 
 ### Testing Third Party API's 
 
-Honorable Mentions
+> Honorable Mentions
 
 ##### Bypass Hex Package
 
