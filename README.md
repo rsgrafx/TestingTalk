@@ -92,7 +92,11 @@ Made up of several macros that help you structure your test suite, test cases in
 
 ### Macros - ExUnit.Case
 
-* [test macro definition](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266) |  [register_test a function called internally](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
+Lets look at the ExUnit definitions for commonly used macros
+
+#### * [test](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L266)
+
+>  [register_test a function called internally](https://github.com/rsgrafx/TestingTalk/blob/fff8f85838c628829308beeffbadd2db9e543343/ex_unit/lib/ex_unit/case.ex#L436)
 
 The gist of what's happening is the test macro defines a function on the module the macro was used.
 
@@ -105,7 +109,7 @@ checks that a function by that name was not already implemented and builds the e
   
   IO.inspect Module.definitions_in(HelloWorldTest, :def)
 ```
-* [describe](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L372)
+#### * [describe](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit/case.ex#L372)
 
 Every describe block receives a name which is used as prefix for upcoming tests. Inside a block, ExUnit.Callbacks.setup/1 may be invoked and it will define a setup callback to run only for the current block. The describe name is also added as a tag, allowing developers to run tests for specific blocks.
 
@@ -113,7 +117,7 @@ Every describe block receives a name which is used as prefix for upcoming tests.
 
 > #### The world surrounding your Test.
 
-[Tagged Example](https://github.com/rsgrafx/TestingTalk/blob/7b5c89fc1ac4cb078bdcf961d165d7a42a286bb5/module_tags/example_code_loading_test.exs)
+[Tagged test Example](https://github.com/rsgrafx/TestingTalk/blob/7b5c89fc1ac4cb078bdcf961d165d7a42a286bb5/module_tags/example_code_loading_test.exs)
 
 Context data helps each test run in specific scope.  We can use tags or callbacks to help get data required to test how our functionality works when the variables have changed.
 
@@ -242,9 +246,12 @@ For Example if your using fixtures. Your tests for your Phoenix Controllers dont
 
 [Great Fixture Ecto writeup](http://blog.danielberkompas.com/elixir/2015/07/16/fixtures-for-ecto.html)
 
-[Example of a Context Case](https://github.com/rsgrafx/TestingTalk/blob/master/one-offs/example_context_case.ex)
+[Example of a Context Case pulled from an app I worked on.](https://github.com/rsgrafx/TestingTalk/blob/master/one-offs/example_context_case.ex)
 
-Phoenix already makes it easy to write tests for your controllers.  Hound makes writing Integration tests easy by runnning phoenix that run in a headless browser. 
+--
+
+> #### Integration Testing and Phoenix.
+> Phoenix already makes it easy to write tests for your controllers.  Hound makes writing Integration tests easy by runnning phoenix that run in a headless browser. 
 
  You can put this in your mix.exs 
 ` {:hound, "~> 1.0", only: [:dev, :test]}`
@@ -319,3 +326,5 @@ You may be new to a language - but you may not be new to a domain. Knowing how t
 One of the main goals of testing your code is gaining assurances.  Now me coming from the the ruby world where things can get mutated on the fly. Assurance was key to my sanity.   In Elixir I found that I did not have that problem not to say that you can’t get things wrong but its much easier to follow how your passing the data along to see where you the issue lies.
 
 ### To Be Cont'd
+
+`#Always Read the Docs`
