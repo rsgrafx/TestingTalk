@@ -68,11 +68,11 @@ When `ExUnit.start()` is called.
 
 [ExUnit.start Application](https://github.com/rsgrafx/TestingTalk/blob/995200edf1414fab5418dd2c437cc68f0412b760/ex_unit/lib/ex_unit.ex#L133)
 
-In the world of Testing there is a lot of terminology.
+In the world of Testing there is a lot of terminology. Generally speaking.
 
 ### ExUnit.TestModule = Test Scenario
 
-This consists of a detailed Test procedure.  Made up of TestCases.
+A Test Scenario is any functionality that can be tested.  This consists of a detailed Test procedure.  Made up of TestCases.	
 
 ### ExUnit.Test = Test Case 
 
@@ -215,6 +215,18 @@ In summary Mix is a elixir's build has a lot of niceties that help you manage yo
 ## Lets Segway a bit and talk about Boundaries.
 
 How do we define Boundaries? - feedback.
+
+##### Update March/2018 - I recently watched a talk from Empex LA by @andrewhao Phoenix Contexts - Context Mapping.
+
+[Slides](http://www.g9labs.com/beautiful-systems-with-phoenix-contexts-talk/#35)
+
+[Talk](https://www.youtube.com/watch?v=oJghZB9sSuU)
+
+
+I would encourage watching it.  From my experience developing phoenix 1.3 apps I can attest the benefits of Contexts and how they have influenced my testing.
+
+Doing Context Mapping generally leads to the creation of better tests.  Context mapping helps can identify the system boundaries, which intern help you create better API’s for integration testing. Creating other forms of tests benefit from this practice as well.
+
 
 ## Testing and GenServers
 
