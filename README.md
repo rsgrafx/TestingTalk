@@ -191,6 +191,8 @@ mix test --include runnable:true
 
 `mix test --only describe:"PMap"`
 
+`mix test --slowest <N>` Added in Elixir 1.6 - * find the slowest <N> tests.
+
 ```
 # mix.exs
 
